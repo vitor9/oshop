@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
+import { UserService } from './user.service';
 
 @Component({
   selector: 'app-root',
@@ -8,17 +9,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private auth: AuthService, router: Router){
+  constructor(private userService: UserService,
+    private auth: AuthService, router: Router){
     auth.user$.subscribe(user => {
-      //Se o usuario deslogar, nao o objeto de usuario vai estar vazio
-      //Por isso nos temos esta condicao para fazer o redirecionamento
       if (user) {
+        userService.save(user);
+        console.log(user);
+        
+
         let returnUrl = localStorage.getItem('returnUrl');
         router.navigateByUrl(returnUrl);
       }
-      //Em projetos maiores, seria uma boa pratica arranjar uma forma do
-      //usuario se desinscrever, pois se o usuario constinuar inscrito
-      //vai vazar memória do sistema
     })
   }
 }
