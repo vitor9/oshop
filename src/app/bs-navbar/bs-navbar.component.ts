@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
+import { AppUser } from '../models/app-user';
 
 @Component({
   selector: 'bs-navbar',
@@ -7,11 +8,11 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./bs-navbar.component.css']
 })
 export class BsNavbarComponent  {
-  //Não precisamos mais definir esse campo de usuário porque
-  //Porque podemos acessar de AuthService.
-  // user$: Observable<firebase.User>;
+  appUser: AppUser;
 
-  constructor(public auth: AuthService) { }
+  constructor(private auth: AuthService) {
+    auth.appUser$.subscribe(appUser => this.appUser = appUser);
+  }
 
   logout() {
     this.auth.logout();
