@@ -1,12 +1,13 @@
 import * as firebase from 'firebase';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { Observable } from 'rxjs/Observable'
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
+  user$: Observable<firebase.User>;
   //Estamos vazando nossa implementacao para quem esta fora.
   //Porque o tipo deste user$ é observable de firebase.user
   //A abstracao correta seria(segundo puristas), é de:
@@ -17,6 +18,7 @@ export class AuthService {
   //e este é o escopo de nossa aplicacao e realizar essa abstracao
   //sera uma complexidade desnecessária
   constructor(private afAuth: AngularFireAuth) {
+    // this.user$ = afAuth.authState;
     this.user$ = afAuth.authState;
   }
 
